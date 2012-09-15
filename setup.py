@@ -17,7 +17,9 @@ setup(
     maintainer_email = 'niwi@niwi.be',
     packages = find_packages(),
     include_package_data = False,
-    install_requires = [],
+    install_requires = [
+        'djorm-ext-core >= 4.0',
+    ],
     setup_requires = [
         'versiontools >= 1.9',
     ],
