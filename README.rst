@@ -28,7 +28,9 @@ Imagine some django model with postgresql integer array field. You need to find 
         objects = ExpressionManager()
 
 
-With this model definition, we can do this searches::
+With this model definition, we can do this searches:
+
+.. code-block:: python
 
     from djorm_expressions.base import SqlExpression, AND, OR
 
@@ -48,7 +50,9 @@ With this model definition, we can do this searches::
     qs = Register.objects.where(expression)
 
 
-Also, we can use functions to construct a expression::
+Also, we can use functions to construct a expression:
+
+.. code-block:: python
 
     from djorm_expressions.base import SqlFunction
 
@@ -61,7 +65,9 @@ Also, we can use functions to construct a expression::
     )
 
 
-I finally can redefine the behavior "SqlExpression" and make it more "object oriented"::
+I finally can redefine the behavior "SqlExpression" and make it more "object oriented":
+
+.. code-block:: python
 
     class ArrayExpression(object):
         def __init__(self, field):
