@@ -18,7 +18,7 @@ setup(
     packages = find_packages(),
     include_package_data = False,
     install_requires = [
-        'djorm-ext-core >= 4.0',
+        'djorm-ext-core >= 0.4.0',
     ],
     setup_requires = [
         'versiontools >= 1.9',
