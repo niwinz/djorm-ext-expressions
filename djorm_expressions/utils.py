@@ -21,12 +21,12 @@ def _setup_joins_for_fields(parts, node, queryset):
     # Process the join chain to see if it can be trimmed
     col, _, join_list = queryset.query.trim_joins(source, join_list, last, False)
 
-    # If the aggregate references a model or field that requires a join,
-    # those joins must be LEFT OUTER - empty join rows must be returned
-    # in order for zeros to be returned for those aggregates.
-    # for column_alias in join_list:
-    #     queryset.query.promote_alias(column_alias, unconditional=True)
-    queryset.query.promote_joins(join_list, unconditional=True)
+    # Django 1.5 compatibility
+    if django.VERSION[:2] < (1, 5):
+        for column_alias in join_list:
+            queryset.query.promote_alias(column_alias, unconditional=True)
+    else:
+        queryset.query.promote_joins(join_list, unconditional=True)
 
     # this works for one level of depth
     #lookup_model = self.query.model._meta.get_field(parts[-2]).rel.to
