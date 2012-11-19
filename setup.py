@@ -1,12 +1,12 @@
 from setuptools import setup, find_packages
 
 description="""
-Core module of django orm extensions package. Is a collection of third party plugins build in one unified package.
+Facility of complex sql expressions for Django orm.
 """
 
 setup(
     name = "djorm-ext-expressions",
-    version = ':versiontools:djorm_expressions:',
+    version = '0.4.1',
     url = 'https://github.com/niwibe/djorm-ext-expressions',
     license = 'BSD',
     platforms = ['OS Independent'],
@@ -18,19 +18,24 @@ setup(
     packages = find_packages(),
     include_package_data = False,
     install_requires = [
-        'djorm-ext-core >= 0.4.0',
-    ],
-    setup_requires = [
-        'versiontools >= 1.9',
+        'djorm-ext-core >= 0.4.1',
     ],
     zip_safe = False,
     classifiers = [
-        'Development Status :: 4 - Beta',
-        'Framework :: Django',
-        'Intended Audience :: Developers',
-        'License :: OSI Approved :: BSD License',
-        'Operating System :: OS Independent',
-        'Programming Language :: Python',
-        'Topic :: Internet :: WWW/HTTP',
+        "Development Status :: 4 - Beta",
+        #"Development Status :: 5 - Production/Stable",
+        "Operating System :: OS Independent",
+        "Environment :: Web Environment",
+        "Framework :: Django",
+        "License :: OSI Approved :: BSD License",
+        "Intended Audience :: Developers",
+        "Programming Language :: Python",
+        "Programming Language :: Python :: 2",
+        "Programming Language :: Python :: 2.7",
+        "Programming Language :: Python :: 3",
+        "Programming Language :: Python :: 3.2",
+        "Programming Language :: Python :: 3.3",
+        "Topic :: Software Development :: Libraries",
+        "Topic :: Utilities",
     ]
 )

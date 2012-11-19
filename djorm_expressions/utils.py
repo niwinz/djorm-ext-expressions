@@ -1,14 +1,12 @@
 # -*- coding: utf-8 -*-
 
+from __future__ import unicode_literals
+
+import django
 from django.db.models.fields import FieldDoesNotExist
 
 def _setup_joins_for_fields(parts, node, queryset):
-    """
-    Method ported from django 1.4 for correct setup joins.
-    """
-
     parts_num = len(parts)
-
     if parts_num == 0:
         return
 

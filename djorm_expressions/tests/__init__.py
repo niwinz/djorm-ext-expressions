@@ -1,9 +1,11 @@
 # -*- coding: utf-8 -*-
 
-from django.test import TestCase
+from __future__ import unicode_literals
 
+from django.test import TestCase
 from djorm_expressions.base import  RawExpression, SqlExpression, SqlFunction, AND, OR
 from .models import Person, Profile
+
 
 class BitLength(SqlFunction):
     sql_function = "bit_length"

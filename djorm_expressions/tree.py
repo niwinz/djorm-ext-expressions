@@ -1,7 +1,18 @@
 # -*- coding: utf-8 -*-
 
+from __future__ import unicode_literals
+
 from django.utils import tree
 from django.db.models.sql.datastructures import MultiJoin
+
+# Python3 compatibility
+import sys
+
+if sys.version_info.major == 3:
+    text = str
+else:
+    text = unicode
+
 
 class CommonBaseTree(tree.Node):
     """
@@ -15,7 +26,7 @@ class CommonBaseTree(tree.Node):
     query = None
 
     def __init__(self, *args, **kwargs):
-        super(CommonBaseTree, self).__init__(children=list(args) + kwargs.items())
+        super(CommonBaseTree, self).__init__(children=list(args) + list(kwargs.items()))
 
     def _combine(self, other, conn):
         if not isinstance(other, (BaseTree)):
@@ -48,14 +59,22 @@ class RawSQL(object):
         self.connector = connector
         self.query = query
 
-    def __str__(self):
-        connector = " %s " % (self.connector)
-        return connector.join(self.items)
+    if sys.version_info.major == 3:
+        def __str__(self):
+            connector = " %s " % (self.connector)
+            return connector.join(self.items)
+    else:
+        def __str__(self):
+            connector = b" %s " % (self.connector)
+            return connector.join(self.items)
+
+        def __unicode__(self):
+            return self.__str__().decode('utf-8')
 
     def to_str(self, closure=False):
         if closure:
-            return u"(%s)" % unicode(self)
-        return unicode(self)
+            return "(%s)" % text(self)
+        return text(self)
 
 
 class OperatorTree(CommonBaseTree):

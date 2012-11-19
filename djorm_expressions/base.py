@@ -1,7 +1,14 @@
 # -*- coding: utf-8 -*-
 
+from __future__ import unicode_literals
+
 from .utils import _setup_joins_for_fields
 from .tree import AND, OR
+
+import sys
+
+if sys.version_info.major == 3:
+    basestring = str
 
 class SqlNode(object):
     negated = False
