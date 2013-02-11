@@ -66,8 +66,11 @@ class SqlExpression(SqlNode):
             if isinstance(self.field, basestring):
                 params['field'] = qn(self.field)
             elif isinstance(self.field, (tuple, list)):
-                _tbl, _fld = self.field
-                params['field'] = "%s.%s" % (qn(_tbl), qn(_fld))
+                _tbl, _fld, _alias = self.field
+                if _tbl == _alias:
+                    params['field'] = "%s.%s" % (qn(_tbl), qn(_fld))
+                else:
+                    params['field'] = "%s.%s" % (_alias, qn(_fld))
             else:
                 raise ValueError("Invalid field value")
         else:
