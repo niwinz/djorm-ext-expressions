@@ -17,7 +17,7 @@ def _setup_joins_for_fields(parts, node, queryset):
         parts, queryset.model._meta, queryset.query.get_initial_alias(), False)
 
     # Process the join chain to see if it can be trimmed
-    col, _, join_list = queryset.query.trim_joins(source, join_list, last, False)
+    col, alias, join_list = queryset.query.trim_joins(source, join_list, last, False)
 
     # Django 1.5 compatibility
     if django.VERSION[:2] < (1, 5):
@@ -46,3 +46,4 @@ def _setup_joins_for_fields(parts, node, queryset):
                 break
 
         node.field = (lookup_model._meta.db_table, lookup_field.attname)
+    node.field = node.field + (alias,)
