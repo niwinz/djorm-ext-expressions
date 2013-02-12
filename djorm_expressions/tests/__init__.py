@@ -3,8 +3,10 @@
 from __future__ import unicode_literals
 
 from django.test import TestCase
+from django.db.models import Q
+
 from djorm_expressions.base import  RawExpression, SqlExpression, SqlFunction, AND, OR
-from .models import Person, Profile
+from .models import Person, Profile, Node
 
 
 class BitLength(SqlFunction):
@@ -39,7 +41,7 @@ class SqlExpressionsTests(TestCase):
         )
         self.assertEqual(queryset.count(), 1)
 
-    def test_join_lookup_with_expression(self):
+    def test_join_lookup_with_expression_01(self):
         person = Person.objects.create(name="jose")
         profile = Profile.objects.create(person=person)
 
@@ -48,3 +50,26 @@ class SqlExpressionsTests(TestCase):
         )
         self.assertEqual(queryset.count(), 1)
 
+    def test_join_lookup_with_expression_02(self):
+        node1 = Node.objects.create(name="master1")
+        node2 = Node.objects.create(name="master2")
+        node3 = Node.objects.create(name="child1", parent=node1)
+        node4 = Node.objects.create(name="child2", parent=node2)
+
+        queryset = Node.objects.where(
+            SqlExpression("parent__name", "=", "master1")
+        )
+
+        self.assertEqual(queryset.count(), 1)
+
+    def test_join_lookup_with_expression_03(self):
+        node1 = Node.objects.create(name="master1")
+        node2 = Node.objects.create(name="master2")
+        node3 = Node.objects.create(name="child1", parent=node1)
+        node4 = Node.objects.create(name="child2", parent=node2)
+
+        expr = OR(SqlExpression("parent__name", "=", "master1"),
+                    SqlExpression("name", "=", "child1"))
+
+        queryset = Node.objects.where(expr)
+        self.assertEqual(queryset.count(), 1)

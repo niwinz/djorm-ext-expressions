@@ -13,3 +13,11 @@ class Person(models.Model):
 class Profile(models.Model):
     person = models.ForeignKey("Person", related_name="profiles")
     objects = ExpressionManager()
+
+
+class Node(models.Model):
+    name = models.CharField(max_length=200)
+    parent = models.ForeignKey("self", related_name="childs",
+                                        null=True, default=None)
+
+    objects = ExpressionManager()
