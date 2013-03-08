@@ -8,7 +8,7 @@ from django.db.models.sql.datastructures import MultiJoin
 # Python3 compatibility
 import sys
 
-if sys.version_info.major == 3:
+if sys.version_info[0] == 3:
     text = str
 else:
     text = unicode
@@ -59,7 +59,7 @@ class RawSQL(object):
         self.connector = connector
         self.query = query
 
-    if sys.version_info.major == 3:
+    if sys.version_info[0] == 3:
         def __str__(self):
             connector = " %s " % (self.connector)
             return connector.join(self.items)

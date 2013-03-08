@@ -7,7 +7,7 @@ from .tree import AND, OR
 
 import sys
 
-if sys.version_info.major == 3:
+if sys.version_info[0] == 3:
     basestring = str
 
 class SqlNode(object):

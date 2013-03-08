@@ -6,7 +6,7 @@ Facility of complex sql expressions for Django orm.
 
 setup(
     name = "djorm-ext-expressions",
-    version = '0.4.2',
+    version = '0.4.3',
     url = 'https://github.com/niwibe/djorm-ext-expressions',
     license = 'BSD',
     platforms = ['OS Independent'],
@@ -31,6 +31,7 @@ setup(
         "Intended Audience :: Developers",
         "Programming Language :: Python",
         "Programming Language :: Python :: 2",
+        "Programming Language :: Python :: 2.6",
         "Programming Language :: Python :: 2.7",
         "Programming Language :: Python :: 3",
         "Programming Language :: Python :: 3.2",
