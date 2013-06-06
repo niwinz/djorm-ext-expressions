@@ -15,7 +15,7 @@ class ExpressionQuerySetMixin(object):
         extra_select, params = SortedDict(), []
         clone = self._clone()
 
-        for alias, node in kwargs.iteritems():
+        for alias, node in kwargs.items():
             _sql, _params = node.as_sql(self.quote_name, self)
 
             extra_select[alias] = _sql
