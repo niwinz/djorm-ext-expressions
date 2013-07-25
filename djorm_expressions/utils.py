@@ -34,7 +34,10 @@ def _setup_joins_for_fields(parts, node, queryset):
         lookup_model = queryset.model
         for counter, field_name in enumerate(parts):
             try:
-                lookup_field = lookup_model._meta.get_field(field_name)
+                lookup_field = lookup_model._meta.get_field_by_name(field_name)[0]
+                if hasattr(lookup_field, 'field'):
+                    # this step is needed for backwards relations
+                    lookup_field = lookup_field.field
             except FieldDoesNotExist:
                 parts.pop()
                 break

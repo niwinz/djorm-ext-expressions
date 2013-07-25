@@ -32,7 +32,6 @@ class SqlExpressionsTests(TestCase):
         self.assertEqual(sql.to_str(), "(name = %s AND age = %s) OR (name = %s AND age = %s)")
         self.assertEqual(params, ['Foo', 14, 'Bar', 14])
 
-
     def test_string_sample_statement(self):
         obj = Person.objects.create(name="jose")
 
@@ -59,8 +58,11 @@ class SqlExpressionsTests(TestCase):
         queryset = Node.objects.where(
             SqlExpression("parent__name", "=", "master1")
         )
-
         self.assertEqual(queryset.count(), 1)
+
+        queryset = Node.objects.where(
+            SqlExpression("childs__name", "=", "child1")
+        )
 
     def test_join_lookup_with_expression_03(self):
         node1 = Node.objects.create(name="master1")
