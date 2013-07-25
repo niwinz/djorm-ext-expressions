@@ -5,7 +5,11 @@ from __future__ import unicode_literals
 import django
 from django.db.models.fields import FieldDoesNotExist
 
+
 def _setup_joins_for_fields(parts, node, queryset):
+    version = django.VERSION[:2]
+    version_lt_1_5, version_gt_1_5 = version < (1, 5), version >= (1, 6)
+
     parts_num = len(parts)
     if parts_num == 0:
         return
@@ -13,17 +17,29 @@ def _setup_joins_for_fields(parts, node, queryset):
     if parts_num == 1:
         node.field = (queryset.model._meta.db_table, parts[0])
 
-    field, source, opts, join_list, last, _ = queryset.query.setup_joins(
+    setup_joins = queryset.query.setup_joins(
         parts, queryset.model._meta, queryset.query.get_initial_alias(), False)
 
-    # Process the join chain to see if it can be trimmed
-    col, alias, join_list = queryset.query.trim_joins(source, join_list, last, False)
+    if version_gt_1_5:
+        # Django 1.6+ compatibility.
+        field, source, opts, join_list, last = setup_joins
+    else:
+        field, source, opts, join_list, last, _ = setup_joins
 
-    # Django 1.5 compatibility
-    if django.VERSION[:2] < (1, 5):
+    # Process the join chain to see if it can be trimmed
+    if version_gt_1_5:
+        # Django 1.6+ compatibility.
+        trim_joins_args = source, join_list, last
+    else:
+        trim_joins_args = source, join_list, last, False
+
+    col, alias, join_list = queryset.query.trim_joins(*trim_joins_args)
+
+    if version_lt_1_5:
         for column_alias in join_list:
             queryset.query.promote_alias(column_alias, unconditional=True)
     else:
+        # Django 1.5+ compatibility
         queryset.query.promote_joins(join_list, unconditional=True)
 
     # this works for one level of depth
