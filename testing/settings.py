@@ -28,3 +28,5 @@ INSTALLED_APPS = (
     'djorm_expressions',
     'djorm_expressions.tests',
 )
+
+TEST_RUNNER = 'django.test.simple.DjangoTestSuiteRunner'

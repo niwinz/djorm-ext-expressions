@@ -1,6 +1,11 @@
 Changelog
 =========
 
+Version 0.6.0
+-------------
+
+- Fix django 1.6 compatibilities.
+
 
 Version 0.5.0
 -------------
