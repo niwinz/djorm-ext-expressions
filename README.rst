@@ -2,6 +2,9 @@
 djorm-ext-expressions
 =====================
 
+**NOTE:** This package should not to have support for django 1.7, because this package has a lot of limitations,
+and new custom lookups of django 1.7 can solve a big part of things that djorm-ext-expressions intends to solve.
+
 Django by default, provides a wide range of field types and generic lookups for queries. This in many cases is more than enough. But there are cases where you need to use types defined for yourself and search operators that are not defined in django lookups and another important case is to make searches requiring the execution of some function in WHERE clause.
 
 In django, for these last two cases, it requires writing SQL statements. ``djorm-ext-expressions``  introduces the method ``manager.where()`` and some class'es (SqlExpression, SqlFunction, AND, OR, ...) to facilite sql construction for advanced cases.
