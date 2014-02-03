@@ -8,7 +8,7 @@ from django.db.models.fields import FieldDoesNotExist
 
 def _setup_joins_for_fields(parts, node, queryset):
     version = django.VERSION[:2]
-    version_lt_1_5, version_gt_1_5 = version < (1, 5), version >= (1, 6)
+    version_lt_1_5, version_gt_1_5, version_ge_1_7 = version < (1, 5), version >= (1, 6), version >= (1, 7)
 
     parts_num = len(parts)
     if parts_num == 0:
@@ -39,8 +39,11 @@ def _setup_joins_for_fields(parts, node, queryset):
     if version_lt_1_5:
         for column_alias in join_list:
             queryset.query.promote_alias(column_alias, unconditional=True)
+    elif version_ge_1_7:
+        # Django 1.7+ compatibility
+        queryset.query.promote_joins(join_list)
     else:
-        # Django 1.5+ compatibility
+        # Django 1.5-1.6 compatibility
         queryset.query.promote_joins(join_list, unconditional=True)
 
     # this works for one level of depth
