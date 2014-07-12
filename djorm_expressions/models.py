@@ -44,10 +44,10 @@ class ExpressionQuerySetMixin(object):
 
 class ExpressionManagerMixin(object):
     def annotate_functions(self, **kwargs):
-        return self.get_query_set().annotate_functions(**kwargs)
+        return self.get_queryset().annotate_functions(**kwargs)
 
     def where(self, *args):
-        return self.get_query_set().where(*args)
+        return self.get_queryset().where(*args)
 
 
 class ExpressionQuerySet(ExpressionQuerySetMixin, QuerySet):
@@ -64,5 +64,5 @@ class ExpressionManager(ExpressionManagerMixin, models.Manager):
 
     use_for_related_fields = True
 
-    def get_query_set(self):
+    def get_queryset(self):
         return ExpressionQuerySet(model=self.model, using=self._db)
