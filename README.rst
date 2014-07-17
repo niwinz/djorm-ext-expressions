@@ -2,6 +2,8 @@
 djorm-ext-expressions
 =====================
 
+**Warning:** this package is now unmantained.
+
 **NOTE:** This package should not to have support for django 1.7, because this package has a lot of limitations,
 and new custom lookups of django 1.7 can solve a big part of things that djorm-ext-expressions intends to solve.
 
